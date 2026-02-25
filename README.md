@@ -1,163 +1,57 @@
-# BMI Calculator - .NET MAUI
+# BMI Calculator
 
-A modern and intuitive BMI (Body Mass Index) Calculator built using .NET MAUI (Multi-platform App UI). This cross-platform application allows users to calculate their BMI and view their health category.
+A BMI calculator app built with .NET MAUI for my mobile development project.
 
 ## Features
 
-- 🎯 **Simple Input**: Enter your height (cm) and weight (kg)
-- 📊 **Instant Calculation**: Calculate BMI with a single tap
-- 🎨 **Visual Feedback**: Color-coded results based on BMI category
-- 📱 **Cross-Platform**: Runs on Android, iOS, macOS, and Windows
-- 💫 **Smooth Animations**: Beautiful UI transitions and effects
-- ✅ **Input Validation**: Ensures valid data entry
+- Calculate BMI based on height, weight, age, and gender
+- Switch between Metric (cm/kg) and Imperial (in/lbs) units
+- Shows your actual BMI vs ideal BMI comparison
+- Age-based BMI categories (children, adults, seniors)
+- Gender-specific BMI ranges
+- Dark theme UI with pastel accent colors
+- Popup results with smooth animations
+
+## How It Works
+
+1. Select your gender (Male/Female)
+2. Choose unit system (Metric/Imperial)
+3. Input your height using the slider or tap to type
+4. Enter your weight and age
+5. Tap "CALCULATE BMI" to see results
+
+The app will show you:
+- Your current BMI
+- Your ideal BMI for your age/gender
+- How many points away from ideal
+- BMI category (Underweight, Normal, Overweight, Obese)
+
+## Tech Stack
+
+- .NET MAUI 9.0
+- C# & XAML
+- Targets Android (tested on Pixel 8 emulator)
+
+## Running the App
+
+Make sure you have .NET 9 SDK installed, then run:
+
+```bash
+dotnet build -f net9.0-android -t:Run
+```
+
+Or open in VS Code with MAUI extension and press F5.
 
 ## BMI Categories
 
-The app categorizes BMI into four ranges:
+**Adults (18-64):**
+- Male: Normal is 18.5-24.9, Ideal is 21.7
+- Female: Healthy is 18.5-23.9, Ideal is 21.2
 
-- **Underweight**: BMI < 18.5 (Orange)
-- **Normal Weight**: BMI 18.5 - 24.9 (Green)
-- **Overweight**: BMI 25 - 29.9 (Orange)
-- **Obese**: BMI ≥ 30 (Red)
+**Seniors (65+):** Healthy range is 22-27, Ideal is 24.5
 
-## Prerequisites
-
-To build and run this project, you need:
-
-- [.NET 8 SDK](https://dotnet.microsoft.com/download/dotnet/8.0)
-- Visual Studio 2022 (v17.8 or later) with .NET MAUI workload installed
-  - OR Visual Studio Code with C# Dev Kit extension
-- For platform-specific development:
-  - **Android**: Android SDK
-  - **iOS/macOS**: Xcode (macOS only)
-  - **Windows**: Windows 10/11 SDK
-
-## Installation & Setup
-
-1. **Clone the repository:**
-   ```bash
-   git clone <your-github-repository-url>
-   cd BMI Calculator
-   ```
-
-2. **Restore NuGet packages:**
-   ```bash
-   dotnet restore
-   ```
-
-3. **Build the project:**
-   ```bash
-   dotnet build
-   ```
-
-4. **Run the application:**
-   
-   For Windows:
-   ```bash
-   dotnet build -t:Run -f net8.0-windows10.0.19041.0
-   ```
-   
-   For Android:
-   ```bash
-   dotnet build -t:Run -f net8.0-android
-   ```
-   
-   For iOS (macOS only):
-   ```bash
-   dotnet build -t:Run -f net8.0-ios
-   ```
-   
-   For macCatalyst (macOS only):
-   ```bash
-   dotnet build -t:Run -f net8.0-maccatalyst
-   ```
-
-## Using Visual Studio
-
-1. Open `BMICalculator.csproj` or the solution file in Visual Studio 2022
-2. Select your target platform from the debug dropdown
-3. Press F5 or click the "Run" button
-
-## Project Structure
-
-```
-BMI Calculator/
-├── App.xaml                 # Application resources
-├── App.xaml.cs             # Application initialization
-├── AppShell.xaml           # Shell navigation structure
-├── AppShell.xaml.cs        # Shell code-behind
-├── MainPage.xaml           # Main UI page
-├── MainPage.xaml.cs        # BMI calculation logic
-├── MauiProgram.cs          # App configuration
-├── BMICalculator.csproj    # Project file
-├── Resources/
-│   ├── Styles/
-│   │   ├── Colors.xaml     # Color definitions
-│   │   └── Styles.xaml     # UI styles
-│   ├── Fonts/              # Custom fonts
-│   ├── Images/             # App images
-│   └── AppIcon/            # App icon
-└── README.md
-```
-
-## How to Use
-
-1. Launch the application
-2. Enter your height in centimeters (e.g., 170)
-3. Enter your weight in kilograms (e.g., 70)
-4. Tap the "Calculate BMI" button
-5. View your BMI value and health category
-
-## Technologies Used
-
-- **.NET 8**: Latest .NET framework
-- **.NET MAUI**: Cross-platform UI framework
-- **XAML**: UI markup language
-- **C#**: Programming language
-
-## BMI Calculation Formula
-
-```
-BMI = weight (kg) / (height (m))²
-```
-
-## Screenshots
-
-*(Add screenshots of your app here when running)*
-
-## Contributing
-
-Feel free to fork this project and submit pull requests for any improvements.
-
-## License
-
-This project is open source and available for educational purposes.
-
-## Author
-
-Created as a .NET MAUI learning project.
+**Children (<18):** Healthy range is 18.5-25, Ideal is 21.75
 
 ## Notes
 
-- The app uses metric units (centimeters and kilograms)
-- BMI is a general indicator and should not replace professional medical advice
-- Always consult healthcare professionals for health-related concerns
-
-## Troubleshooting
-
-If you encounter build issues:
-
-1. Ensure you have the latest .NET 8 SDK installed
-2. Verify .NET MAUI workload is installed:
-   ```bash
-   dotnet workload install maui
-   ```
-3. Clean and rebuild the solution:
-   ```bash
-   dotnet clean
-   dotnet build
-   ```
-
-## Support
-
-For issues or questions, please open an issue in the GitHub repository.
+Default values start at 0. The app converts units automatically when you switch between metric and imperial.
