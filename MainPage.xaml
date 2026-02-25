@@ -1,0 +1,435 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="BMICalculator.MainPage"
+             BackgroundColor="#000000">
+
+    <Grid>
+        <!-- Main Content -->
+        <ScrollView>
+        <VerticalStackLayout
+            Spacing="20"
+            Padding="20,50,20,20"
+            VerticalOptions="Start">
+
+            <!-- Title -->
+            <Grid ColumnDefinitions="*,Auto" Margin="0,0,0,20">
+                <Label
+                    Grid.Column="0"
+                    Text="BMI CALCULATOR"
+                    FontSize="16"
+                    FontAttributes="Bold"
+                    TextColor="White"
+                    VerticalOptions="Center" />
+                <Label
+                    Grid.Column="1"
+                    Text="⟲"
+                    FontSize="24"
+                    TextColor="White"
+                    VerticalOptions="Center">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnResetClicked" />
+                    </Label.GestureRecognizers>
+                </Label>
+            </Grid>
+
+            <!-- Unit Toggle -->
+            <Border
+                BackgroundColor="#2C2C2C"
+                StrokeThickness="0"
+                Padding="4"
+                HeightRequest="45"
+                Margin="0,0,0,15">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="22" />
+                </Border.StrokeShape>
+                <Grid ColumnDefinitions="*,*" ColumnSpacing="0">
+                    <Border
+                        x:Name="MetricBorder"
+                        Grid.Column="0"
+                        BackgroundColor="#FFFFFF"
+                        StrokeThickness="0"
+                        Padding="0">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="20" />
+                        </Border.StrokeShape>
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnMetricSelected" />
+                        </Border.GestureRecognizers>
+                        <Label
+                            x:Name="MetricLabel"
+                            Text="Metric"
+                            FontSize="14"
+                            FontAttributes="Bold"
+                            TextColor="#000000"
+                            HorizontalOptions="Center"
+                            VerticalOptions="Center" />
+                    </Border>
+                    <Border
+                        x:Name="ImperialBorder"
+                        Grid.Column="1"
+                        BackgroundColor="Transparent"
+                        StrokeThickness="0"
+                        Padding="0">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="20" />
+                        </Border.StrokeShape>
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnImperialSelected" />
+                        </Border.GestureRecognizers>
+                        <Label
+                            x:Name="ImperialLabel"
+                            Text="Imperial"
+                            FontSize="14"
+                            FontAttributes="Bold"
+                            TextColor="#808080"
+                            HorizontalOptions="Center"
+                            VerticalOptions="Center" />
+                    </Border>
+                </Grid>
+            </Border>
+
+            <!-- Gender Selection -->
+            <Grid ColumnDefinitions="*,*" ColumnSpacing="15">
+                <Border
+                    x:Name="MaleBorder"
+                    Grid.Column="0"
+                    StrokeThickness="0"
+                    BackgroundColor="#2C2C2C"
+                    Padding="20"
+                    HeightRequest="120">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="15" />
+                    </Border.StrokeShape>
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnMaleSelected" />
+                    </Border.GestureRecognizers>
+                    <VerticalStackLayout Spacing="10" VerticalOptions="Center">
+                        <Label
+                            x:Name="MaleIcon"
+                            Text="♂"
+                            FontSize="40"
+                            TextColor="#606060"
+                            HorizontalOptions="Center" />
+                        <Label
+                            x:Name="MaleLabel"
+                            Text="MALE"
+                            FontSize="14"
+                            FontAttributes="Bold"
+                            TextColor="#606060"
+                            HorizontalOptions="Center" />
+                    </VerticalStackLayout>
+                </Border>
+                
+                <Border
+                    x:Name="FemaleBorder"
+                    Grid.Column="1"
+                    StrokeThickness="0"
+                    BackgroundColor="#2C2C2C"
+                    Padding="20"
+                    HeightRequest="120">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="15" />
+                    </Border.StrokeShape>
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnFemaleSelected" />
+                    </Border.GestureRecognizers>
+                    <VerticalStackLayout Spacing="10" VerticalOptions="Center">
+                        <Label
+                            x:Name="FemaleIcon"
+                            Text="♀"
+                            FontSize="40"
+                            TextColor="#606060"
+                            HorizontalOptions="Center" />
+                        <Label
+                            x:Name="FemaleLabel"
+                            Text="FEMALE"
+                            FontSize="14"
+                            FontAttributes="Bold"
+                            TextColor="#606060"
+                            HorizontalOptions="Center" />
+                    </VerticalStackLayout>
+                </Border>
+            </Grid>
+
+            <!-- Height Section -->
+            <Border
+                BackgroundColor="#2C2C2C"
+                StrokeThickness="0"
+                Padding="20"
+                Margin="0,0,0,0">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="15" />
+                </Border.StrokeShape>
+                <VerticalStackLayout Spacing="10">
+                    <Label
+                        x:Name="HeightUnitLabel"
+                        Text="HEIGHT (CM)"
+                        FontSize="12"
+                        FontAttributes="Bold"
+                        TextColor="#A0A0A0"
+                        HorizontalOptions="Center" />
+                    <HorizontalStackLayout HorizontalOptions="Center" Spacing="5">
+                        <Label
+                            x:Name="HeightValueLabel"
+                            Text="0"
+                            FontSize="36"
+                            FontAttributes="Bold"
+                            TextColor="White">
+                            <Label.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnHeightTapped" />
+                            </Label.GestureRecognizers>
+                        </Label>
+                        <Label
+                            x:Name="HeightUnitSmallLabel"
+                            Text="cm"
+                            FontSize="14"
+                            TextColor="#A0A0A0"
+                            VerticalOptions="End"
+                            Margin="0,0,0,8" />
+                    </HorizontalStackLayout>
+                    <Slider
+                        x:Name="HeightSlider"
+                        Minimum="0"
+                        Maximum="250"
+                        Value="0"
+                        MinimumTrackColor="#808080"
+                        MaximumTrackColor="#404040"
+                        ThumbColor="#FFFFFF"
+                        ValueChanged="OnHeightSliderChanged" />
+                    <Label
+                        Text="Tap the number to type exact value"
+                        FontSize="10"
+                        TextColor="#606060"
+                        HorizontalOptions="Center"
+                        Margin="0,5,0,0" />
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- Weight and Age Section -->
+            <Grid ColumnDefinitions="*,*" ColumnSpacing="15" Margin="0,15,0,0">
+                <!-- Weight -->
+                <Border
+                    Grid.Column="0"
+                    BackgroundColor="#2C2C2C"
+                    StrokeThickness="0"
+                    Padding="20"
+                    HeightRequest="140">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="15" />
+                    </Border.StrokeShape>
+                    <VerticalStackLayout Spacing="12" VerticalOptions="Center">
+                        <Label
+                            x:Name="WeightUnitLabel"
+                            Text="WEIGHT (KG)"
+                            FontSize="12"
+                            FontAttributes="Bold"
+                            TextColor="#A0A0A0"
+                            HorizontalOptions="Center" />
+                        <Entry
+                            x:Name="WeightEntry"
+                            Placeholder="--"
+                            PlaceholderColor="#808080"
+                            TextColor="White"
+                            FontSize="32"
+                            FontAttributes="Bold"
+                            Keyboard="Numeric"
+                            HorizontalTextAlignment="Center"
+                            VerticalTextAlignment="Center"
+                            BackgroundColor="#1A1A1A"
+                            HeightRequest="60"
+                            TextChanged="OnInputChanged" />
+                    </VerticalStackLayout>
+                </Border>
+
+                <!-- Age -->
+                <Border
+                    Grid.Column="1"
+                    BackgroundColor="#2C2C2C"
+                    StrokeThickness="0"
+                    Padding="20"
+                    HeightRequest="140">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="15" />
+                    </Border.StrokeShape>
+                    <VerticalStackLayout Spacing="12" VerticalOptions="Center">
+                        <Label
+                            Text="AGE"
+                            FontSize="12"
+                            FontAttributes="Bold"
+                            TextColor="#A0A0A0"
+                            HorizontalOptions="Center" />
+                        <Entry
+                            x:Name="AgeEntry"
+                            Placeholder="--"
+                            PlaceholderColor="#808080"
+                            TextColor="White"
+                            FontSize="32"
+                            FontAttributes="Bold"
+                            Keyboard="Numeric"
+                            HorizontalTextAlignment="Center"
+                            VerticalTextAlignment="Center"
+                            BackgroundColor="#1A1A1A"
+                            HeightRequest="60"
+                            TextChanged="OnInputChanged" />
+                    </VerticalStackLayout>
+                </Border>
+            </Grid>
+
+            <!-- Calculate Button -->
+            <Border
+                BackgroundColor="#FFFFFF"
+                StrokeThickness="0"
+                HeightRequest="50"
+                Margin="0,25,0,20">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="25" />
+                </Border.StrokeShape>
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnCalculateClicked" />
+                </Border.GestureRecognizers>
+                <Label
+                    Text="CALCULATE BMI"
+                    FontSize="16"
+                    FontAttributes="Bold"
+                    TextColor="#000000"
+                    HorizontalOptions="Center"
+                    VerticalOptions="Center" />
+            </Border>
+
+        </VerticalStackLayout>
+    </ScrollView>
+
+        <!-- Result Popup Overlay -->
+        <BoxView
+            x:Name="OverlayBackground"
+            Color="#CC000000"
+            IsVisible="False"
+            ZIndex="1">
+            <BoxView.GestureRecognizers>
+                <TapGestureRecognizer Tapped="OnCloseResultClicked" />
+            </BoxView.GestureRecognizers>
+        </BoxView>
+
+        <!-- Result Popup Card -->
+        <Border
+            x:Name="ResultFrame"
+            BackgroundColor="#2C2C2C"
+            StrokeThickness="2"
+            Stroke="#404040"
+            Padding="30"
+            IsVisible="False"
+            WidthRequest="340"
+            HeightRequest="500"
+            ZIndex="2"
+            HorizontalOptions="Center"
+            VerticalOptions="Center">
+            <Border.StrokeShape>
+                <RoundRectangle CornerRadius="20" />
+            </Border.StrokeShape>
+            <VerticalStackLayout Spacing="20">
+                <!-- Close Button -->
+                <Label
+                    Text="✕"
+                    FontSize="24"
+                    TextColor="#808080"
+                    HorizontalOptions="End"
+                    Margin="0,-10,-10,0">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnCloseResultClicked" />
+                    </Label.GestureRecognizers>
+                </Label>
+
+                <Label
+                    Text="YOUR RESULT"
+                    FontSize="14"
+                    FontAttributes="Bold"
+                    TextColor="#A0A0A0"
+                    HorizontalOptions="Center"
+                    Margin="0,-10,0,0" />
+
+                <!-- BMI Comparison -->
+                <Grid ColumnDefinitions="*,*" ColumnSpacing="15" Margin="0,5,0,0">
+                    <!-- Actual BMI -->
+                    <VerticalStackLayout Grid.Column="0" Spacing="5">
+                        <Label
+                            Text="ACTUAL BMI"
+                            FontSize="11"
+                            FontAttributes="Bold"
+                            TextColor="#808080"
+                            HorizontalOptions="Center" />
+                        <Label
+                            x:Name="BmiValueLabel"
+                            Text="0.0"
+                            FontSize="38"
+                            FontAttributes="Bold"
+                            TextColor="White"
+                            HorizontalOptions="Center" />
+                    </VerticalStackLayout>
+
+                    <!-- Ideal BMI -->
+                    <VerticalStackLayout Grid.Column="1" Spacing="5">
+                        <Label
+                            Text="IDEAL BMI"
+                            FontSize="11"
+                            FontAttributes="Bold"
+                            TextColor="#808080"
+                            HorizontalOptions="Center" />
+                        <Label
+                            x:Name="IdealBmiLabel"
+                            Text="21.7"
+                            FontSize="38"
+                            FontAttributes="Bold"
+                            TextColor="#81C784"
+                            HorizontalOptions="Center" />
+                    </VerticalStackLayout>
+                </Grid>
+
+                <!-- Difference Display -->
+                <Label
+                    x:Name="DifferenceLabel"
+                    Text="You are 2.3 points above ideal BMI"
+                    FontSize="12"
+                    FontAttributes="Bold"
+                    TextColor="#FFB74D"
+                    HorizontalOptions="Center"
+                    HorizontalTextAlignment="Center"
+                    Margin="0,5,0,0" />
+
+                <!-- BMI Category Display -->
+                <Border
+                    x:Name="CategoryFrame"
+                    BackgroundColor="#4CAF50"
+                    StrokeThickness="0"
+                    Padding="15"
+                    HeightRequest="55"
+                    Margin="0,5,0,0">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="28" />
+                    </Border.StrokeShape>
+                    <Label
+                        x:Name="CategoryLabel"
+                        Text="Normal Weight"
+                        FontSize="18"
+                        FontAttributes="Bold"
+                        TextColor="White"
+                        HorizontalOptions="Center"
+                        VerticalOptions="Center" />
+                </Border>
+
+                <!-- BMI Info -->
+                <Label
+                    x:Name="CategoryInfoLabel"
+                    Text="You have a normal body weight. Keep maintaining your healthy lifestyle!"
+                    FontSize="12"
+                    TextColor="#B0B0B0"
+                    HorizontalOptions="Center"
+                    HorizontalTextAlignment="Center"
+                    LineBreakMode="WordWrap"
+                    Margin="0,5,0,0" />
+            </VerticalStackLayout>
+        </Border>
+
+    </Grid>
+
+</ContentPage>
